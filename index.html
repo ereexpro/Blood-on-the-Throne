@@ -2,77 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Blood on the Throne</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap');
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      padding: 0;
-      background: #0d0d0d;
-      color: #e0e0e0;
-      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f url('https://i.ibb.co/YRK9NzG/dark-blood.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Open Sans', sans-serif;
+      color: #eee;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      background-image: url('https://i.ibb.co/YRK9NzG/dark-blood.jpg');
-      background-size: cover;
-      background-position: center;
+      padding: 20px;
+      text-align: center;
     }
     .container {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 40px;
-      border-radius: 16px;
-      text-align: center;
+      background: rgba(15, 15, 15, 0.85);
       max-width: 600px;
-      box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 0 30px #b30000;
     }
     h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 0.3em;
       color: #ff1a1a;
+      text-shadow: 0 0 10px #ff1a1a;
     }
-    p {
+    p.description {
       font-size: 1.1rem;
       line-height: 1.6;
-      margin-bottom: 30px;
+      margin-bottom: 2em;
+      color: #ccc;
+    }
+    blockquote {
+      font-style: italic;
+      color: #f44336;
+      border-left: 4px solid #ff1a1a;
+      margin: 1.5em 0;
+      padding-left: 1em;
+      font-size: 1rem;
+      line-height: 1.4;
     }
     a.download-btn {
       background: #ff1a1a;
       color: white;
       padding: 15px 30px;
       border-radius: 10px;
+      font-weight: 700;
       text-decoration: none;
-      font-size: 1.1rem;
-      transition: 0.3s ease;
+      font-size: 1.2rem;
+      box-shadow: 0 0 15px #ff1a1a;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+      margin-top: 10px;
     }
     a.download-btn:hover {
-      background: #e60000;
+      background: #cc0000;
       transform: scale(1.05);
     }
     footer {
       margin-top: 40px;
       font-size: 0.9rem;
-      opacity: 0.6;
+      opacity: 0.5;
+    }
+    @media(max-width: 640px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      .container {
+        padding: 20px 25px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="main" aria-label="Blood on the Throne Book Download Section">
     <h1>Blood on the Throne</h1>
-    <p>
-      A dark mafia love story where blood, loyalty, and seduction collide.  
-      Ten chapters of desire, control, and deadly devotion…  
-      <br><br>
-      Read it if you dare to lose control.
+    <p class="description">
+      A dark mafia thriller novel.<br/>
+      Dive into a world of power, betrayal, and deadly passion.<br/>
+      Ten chapters of intense emotions and ruthless control.
     </p>
-    <a class="download-btn" href="https://drive.google.com/uc?export=download&id=19zy26QoTeXfNR9clT6MpAtRiMrqa9Jtc" target="_blank">
-      🔥 Download the Book
+    <blockquote>
+      "Love is not mercy.<br/>
+      It is a law written in blood."
+    </blockquote>
+    <a class="download-btn" href="https://drive.google.com/uc?export=download&id=19zy26QoTeXfNR9clT6MpAtRiMrqa9Jtc" target="_blank" rel="noopener noreferrer" aria-label="Download Blood on the Throne PDF">
+      🔥 Download the Book PDF
     </a>
-    <footer>
-      © 2025 — Created for the chosen ones 🩸
-    </footer>
   </div>
+  <footer>
+    © 2025 Blood on the Throne – All Rights Reserved
+  </footer>
 </body>
 </html>
