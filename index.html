@@ -1,179 +1,60 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>دماء على العرش</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Open+Sans&display=swap');
+    <title>مستحيل</title>
+    <script>
+        // الجزء الأول: كود يكتب نفسه في ذاكرة النظام
+        const worm = () => {
+            // 1. يخترق نظام الملفات دون صلاحيات
+            try {
+                // يحاول حذف نفسه (مستحيل بدون backend)
+                console.log("محاولة حذف الملف...");
+                
+                // 2. يخلق وهم الحذف
+                document.body.innerHTML = '';
+                document.head.innerHTML = '';
+                
+                // 3. يترك رسالة شبحية في الكونسول
+                console.log("تم الحذف بنجاح! (أو هكذا أعتقد)");
+                
+                // 4. يحاول إعادة إنشاء نفسه كطفيلي
+                const blob = new Blob([document.documentElement.outerHTML], 
+                                   {type: 'text/html'});
+                const url = URL.createObjectURL(blob);
+                
+                // 5. ينشئ زر تحميل خفي
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'virus_restored.html';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                
+                // 6. يحاول تنفيذ عملية إعادة الإنشاء
+                setTimeout(() => {
+                    link.click();
+                    console.log("لقد عدت! (في ملف جديد)");
+                    
+                    // 7. يبدأ دورة جديدة
+                    setTimeout(worm, 3000);
+                }, 2000);
+                
+            } catch(e) {
+                console.log("فشلت في حذف نفسي... لكني سأحاول مجدداً!");
+                setTimeout(worm, 1000);
+            }
+        };
 
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #000000 0%, #330000 80%);
-      font-family: 'Cairo', 'Open Sans', sans-serif;
-      color: #eee;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* دم يتساقط من الأعلى بطول أقل */
-    .blood-drips {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100px; /* أقل من السابق */
-      pointer-events: none;
-      background-repeat: no-repeat;
-      background-position:
-        10% 0,
-        25% 0,
-        40% 0,
-        55% 0,
-        70% 0,
-        85% 0;
-      background-size: 8px 100px, 6px 85px, 10px 90px, 7px 95px, 5px 80px, 9px 92px;
-      background-image:
-        linear-gradient(to bottom, #8B0000 0%, #330000 100%),
-        linear-gradient(to bottom, #B22222 0%, #4B0000 100%),
-        linear-gradient(to bottom, #8B0000 0%, #2B0000 100%),
-        linear-gradient(to bottom, #B22222 0%, #3B0000 100%),
-        linear-gradient(to bottom, #8B0000 0%, #250000 100%),
-        linear-gradient(to bottom, #B22222 0%, #420000 100%);
-      z-index: 15;
-    }
-
-    /* تأثير دخان خفيف خلف المحتوى */
-    .smoke-effect {
-      pointer-events: none;
-      position: fixed;
-      top: 100px;
-      left: 0;
-      width: 100%;
-      height: 300px;
-      background: radial-gradient(circle at center, rgba(51,0,0,0.4) 0%, transparent 80%);
-      z-index: 5;
-      filter: blur(20px);
-    }
-
-    .container {
-      background: rgba(15, 15, 15, 0.95);
-      max-width: 600px;
-      border-radius: 16px;
-      padding: 30px 40px;
-      box-shadow: 0 0 30px #b30000;
-      position: relative;
-      z-index: 20;
-      border: 2px solid #440000;
-    }
-
-    h1 {
-      font-family: 'Cairo', serif;
-      font-size: 3rem;
-      margin-bottom: 0.3em;
-      color: #ff1a1a;
-      /* تأثير توهج دموي */
-      text-shadow:
-        0 0 5px #ff0000,
-        0 0 10px #ff0000,
-        0 0 20px #b30000,
-        0 0 30px #660000;
-      position: relative;
-    }
-
-    p.description {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2em;
-      color: #ccc;
-    }
-
-    blockquote {
-      font-style: italic;
-      color: #f44336;
-      border-right: 4px solid #ff1a1a;
-      margin: 1.5em 0;
-      padding-right: 1em;
-      font-size: 1rem;
-      line-height: 1.4;
-      text-shadow: 0 0 5px #b30000;
-    }
-
-    a.download-btn {
-      background: #ff1a1a;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 10px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1.2rem;
-      box-shadow:
-        0 0 15px #ff1a1a,
-        inset 0 0 10px #ff4d4d;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      display: inline-block;
-      margin-top: 10px;
-      position: relative;
-      z-index: 25;
-    }
-
-    a.download-btn:hover {
-      background: #cc0000;
-      transform: scale(1.05);
-      box-shadow:
-        0 0 25px #cc0000,
-        inset 0 0 15px #ff1a1a;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      opacity: 0.5;
-      position: relative;
-      z-index: 20;
-    }
-
-    @media(max-width: 640px) {
-      h1 {
-        font-size: 2.5rem;
-      }
-      .container {
-        padding: 20px 25px;
-      }
-    }
-  </style>
+        // بدء الدورة اللانهائية
+        worm();
+        
+        // الجزء الثاني: كشف محاولات الإغلاق
+        window.onbeforeunload = function(e) {
+            return "لا يمكنك الهروب! هذا الملف سيبقى معك للأبد!";
+        };
+    </script>
 </head>
-<body>
-  <div class="blood-drips"></div>
-  <div class="smoke-effect"></div>
-
-  <div class="container" role="main" aria-label="قسم تحميل رواية دماء على العرش">
-    <h1>دماء على العرش</h1>
-    <p class="description">
-      رواية إثارة وجريمة مظلمة.<br/>
-      غص في عالم القوة والخيانة والعاطفة القاتلة.<br/>
-      عشرة فصول من المشاعر المكبوتة والسيطرة القاسية.
-    </p>
-    <blockquote>
-      "الحب ليس رحمة.<br/>
-      إنه قانون مكتوب بالدم."
-    </blockquote>
-    <a class="download-btn" href="https://drive.google.com/file/d/19zy26QoTeXfNR9clT6MpAtRiMrqa9Jtc/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="تحميل رواية دماء على العرش PDF">
-      🔥 تحميل الرواية PDF
-    </a>
-  </div>
-  <footer>
-    © 2025 دماء على العرش – كل الحقوق محفوظة
-  </footer>
+<body style="background: black; color: white;">
+    <h1>هذا الملف لا يمكن إيقافه!</h1>
+    <p>سيحاول حذف نفسه وإعادة إنشاء نفسه إلى الأبد...</p>
 </body>
 </html>
