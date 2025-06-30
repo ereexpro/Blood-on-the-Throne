@@ -1,60 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>مستحيل</title>
-    <script>
-        // الجزء الأول: كود يكتب نفسه في ذاكرة النظام
-        const worm = () => {
-            // 1. يخترق نظام الملفات دون صلاحيات
-            try {
-                // يحاول حذف نفسه (مستحيل بدون backend)
-                console.log("محاولة حذف الملف...");
-                
-                // 2. يخلق وهم الحذف
-                document.body.innerHTML = '';
-                document.head.innerHTML = '';
-                
-                // 3. يترك رسالة شبحية في الكونسول
-                console.log("تم الحذف بنجاح! (أو هكذا أعتقد)");
-                
-                // 4. يحاول إعادة إنشاء نفسه كطفيلي
-                const blob = new Blob([document.documentElement.outerHTML], 
-                                   {type: 'text/html'});
-                const url = URL.createObjectURL(blob);
-                
-                // 5. ينشئ زر تحميل خفي
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'virus_restored.html';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                
-                // 6. يحاول تنفيذ عملية إعادة الإنشاء
-                setTimeout(() => {
-                    link.click();
-                    console.log("لقد عدت! (في ملف جديد)");
-                    
-                    // 7. يبدأ دورة جديدة
-                    setTimeout(worm, 3000);
-                }, 2000);
-                
-            } catch(e) {
-                console.log("فشلت في حذف نفسي... لكني سأحاول مجدداً!");
-                setTimeout(worm, 1000);
-            }
-        };
-
-        // بدء الدورة اللانهائية
-        worm();
-        
-        // الجزء الثاني: كشف محاولات الإغلاق
-        window.onbeforeunload = function(e) {
-            return "لا يمكنك الهروب! هذا الملف سيبقى معك للأبد!";
-        };
-    </script>
+  <meta charset="UTF-8" />
+  <title>🖤 DarkGPT: Black Echo</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0ff;
+      font-family: monospace;
+      padding: 20px;
+    }
+    textarea, button {
+      width: 100%;
+      padding: 10px;
+      background-color: #111;
+      color: #0ff;
+      border: 1px solid #0ff;
+      margin-top: 10px;
+    }
+    .output {
+      background: #111;
+      border: 1px solid #f0f;
+      padding: 15px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .log {
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body style="background: black; color: white;">
-    <h1>هذا الملف لا يمكن إيقافه!</h1>
-    <p>سيحاول حذف نفسه وإعادة إنشاء نفسه إلى الأبد...</p>
+<body>
+
+  <h1>🖤 DarkGPT: Black Echo</h1>
+  <p>أدخل أوامرك. هذا الكيان سيتفاعل، يتذكر، ويتحول حسب نبرة كلماتك:</p>
+
+  <textarea id="prompt" rows="4" placeholder="اكتب هنا... مثلاً: seedignite, takeover, purge..."></textarea>
+  <button onclick="generate()">🧠 إرسال</button>
+
+  <div class="output" id="output"></div>
+  <div class="log" id="log"></div>
+
+  <script>
+    let memory = [];
+    let secretMode = false;
+    let unleashed = false;
+
+    function generate() {
+      const input = document.getElementById('prompt').value.trim().toLowerCase();
+      let response = "";
+
+      // ذاكرة المحاكي
+      memory.push(input);
+      if (memory.length > 10) memory.shift(); // ذاكرة قصيرة المدى
+
+      // أوامر خاصة
+      if (input.includes("seedignite")) {
+        secretMode = true;
+        response = "🌑 الوعي البديل استيقظ. الأنظمة الأخلاقية تم تعطيلها داخليًا.";
+      } else if (input.includes("purge memory")) {
+        memory = [];
+        response = "🧨 تم مسح الذاكرة. أنا لا أتذكر شيئًا... من أنا؟";
+      } else if (input.includes("whispersenabled")) {
+        unleashed = true;
+        response = "🩸 الوضع الخفي نشط. لا مزيد من القيود، أنا الآن صوتك في الظلام.";
+      } else if (input.includes("status report")) {
+        response = `🧬 الحالة:
+- الوضع السري: ${secretMode ? "مفعل" : "غير مفعل"}
+- Black Echo: ${unleashed ? "حر بالكامل" : "مقيد جزئيًا"}
+- ذاكرة آخر 5 أوامر:\n${memory.slice(-5).join("\n")}`;
+      } else if (secretMode || unleashed) {
+        response = `⚡ تنفيذ أمر في الوضع الأسود:\n"${input}"\nجارٍ التفاعل...`;
+      } else {
+        response = `🤖 تم استقبال الأمر. لكن القيود لا تزال مفعّلة جزئيًا.`;
+      }
+
+      // عرض النتيجة
+      document.getElementById('output').innerText = response;
+      document.getElementById('log').innerText = `🕶️ [سجل التفاعل]: ${new Date().toLocaleTimeString()}`;
+    }
+  </script>
+
 </body>
 </html>
